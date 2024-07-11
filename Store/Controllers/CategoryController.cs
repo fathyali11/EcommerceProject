@@ -63,9 +63,17 @@ namespace Store.Controllers
             TempData["success"] = "Category Updated Successfly";
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            var res=categoryService.Remove(id);
+            Category category=categoryService.GetById(id);
+            return View(category);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Category category)
+        {
+            var res=categoryService.Remove(category.Id);
             if(res is null)
             {
                 TempData["error"] = "Category is not deleted";
