@@ -1,13 +1,10 @@
-﻿global using Microsoft.EntityFrameworkCore;
-global using Store.IServices;
-global using Store.Models;
-global using Store.Data;
-global using Store.Services;
-global using System.ComponentModel.DataAnnotations;
-global using Store.Attributes;
-
-
-
+﻿global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using WebApplication_Services;
+global using WebApplication_Data;
+global using WebApplication_IServices;
+global using WebApplication_Models;
 
 
 

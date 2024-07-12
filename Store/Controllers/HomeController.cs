@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Store.Models;
 using System.Diagnostics;
 
 namespace Store.Controllers
