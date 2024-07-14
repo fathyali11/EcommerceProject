@@ -1956,7 +1956,7 @@ Expr = Sizzle.selectors = {
 
 						start = [ forward ? parent.firstChild : parent.lastChild ];
 
-						// non-xml :nth-child(...) stores cache data on `parent`
+						// non-xml :nth-child(...) WebStores cache data on `parent`
 						if ( forward && useCache ) {
 
 							// Seek `elem` from a previously-cached index
@@ -2571,7 +2571,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 					while ( i-- ) {
 						if ( ( elem = matcherOut[ i ] ) ) {
 
-							// Restore matcherIn since elem is not yet a final match
+							// ReWebStore matcherIn since elem is not yet a final match
 							temp.push( ( matcherIn[ i ] = elem ) );
 						}
 					}
@@ -4311,7 +4311,7 @@ Data.prototype = {
 		// which value to return, respectively either:
 		//
 		//   1. The entire cache object
-		//   2. The data stored at the key
+		//   2. The data WebStored at the key
 		//
 		if ( key === undefined ||
 				( ( key && typeof key === "string" ) && value === undefined ) ) {
@@ -4544,7 +4544,7 @@ jQuery.fn.extend( {
 			// Set the data...
 			this.each( function() {
 
-				// We always store the camelCased key
+				// We always WebStore the camelCased key
 				dataUser.set( this, key, value );
 			} );
 		}, null, value, arguments.length > 1, null, true );
@@ -4848,7 +4848,7 @@ function showHide( elements, show ) {
 
 			// Since we force visibility upon cascade-hidden elements, an immediate (and slow)
 			// check is required in this first loop unless we have a nonempty display value (either
-			// inline or about-to-be-restored)
+			// inline or about-to-be-reWebStored)
 			if ( display === "none" ) {
 				values[ index ] = dataPriv.get( elem, "display" ) || null;
 				if ( !values[ index ] ) {
@@ -5635,7 +5635,7 @@ function leverageNative( el, type, expectSync ) {
 				// from an async native handler (gh-4350)
 				if ( !saved.length ) {
 
-					// Store arguments for use when handling the inner native event
+					// WebStore arguments for use when handling the inner native event
 					// There will always be at least one argument (an event object), so this array
 					// will not be confused with a leftover capture object.
 					saved = slice.call( arguments );
@@ -5969,12 +5969,12 @@ function manipulationTarget( elem, content ) {
 	return elem;
 }
 
-// Replace/restore the type attribute of script elements for safe DOM manipulation
+// Replace/reWebStore the type attribute of script elements for safe DOM manipulation
 function disableScript( elem ) {
 	elem.type = ( elem.getAttribute( "type" ) !== null ) + "/" + elem.type;
 	return elem;
 }
-function restoreScript( elem ) {
+function reWebStoreScript( elem ) {
 	if ( ( elem.type || "" ).slice( 0, 5 ) === "true/" ) {
 		elem.type = elem.type.slice( 5 );
 	} else {
@@ -6093,7 +6093,7 @@ function domManip( collection, args, callback, ignored ) {
 				doc = scripts[ scripts.length - 1 ].ownerDocument;
 
 				// Reenable scripts
-				jQuery.map( scripts, restoreScript );
+				jQuery.map( scripts, reWebStoreScript );
 
 				// Evaluate executable scripts on first document insertion
 				for ( i = 0; i < hasScripts; i++ ) {
@@ -6475,7 +6475,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 
 		documentElement.removeChild( container );
 
-		// Nullify the div so it wouldn't be stored in the memory and
+		// Nullify the div so it wouldn't be WebStored in the memory and
 		// it will also be a sign that checks already performed
 		div = null;
 	}
@@ -7327,7 +7327,7 @@ function createTween( value, prop, animation ) {
 }
 
 function defaultPrefilter( elem, props, opts ) {
-	var prop, value, toggle, hooks, oldfire, propTween, restoreDisplay, display,
+	var prop, value, toggle, hooks, oldfire, propTween, reWebStoreDisplay, display,
 		isBox = "width" in props || "height" in props,
 		anim = this,
 		orig = {},
@@ -7399,36 +7399,36 @@ function defaultPrefilter( elem, props, opts ) {
 		opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
 
 		// Identify a display type, preferring old show/hide data over the CSS cascade
-		restoreDisplay = dataShow && dataShow.display;
-		if ( restoreDisplay == null ) {
-			restoreDisplay = dataPriv.get( elem, "display" );
+		reWebStoreDisplay = dataShow && dataShow.display;
+		if ( reWebStoreDisplay == null ) {
+			reWebStoreDisplay = dataPriv.get( elem, "display" );
 		}
 		display = jQuery.css( elem, "display" );
 		if ( display === "none" ) {
-			if ( restoreDisplay ) {
-				display = restoreDisplay;
+			if ( reWebStoreDisplay ) {
+				display = reWebStoreDisplay;
 			} else {
 
 				// Get nonempty value(s) by temporarily forcing visibility
 				showHide( [ elem ], true );
-				restoreDisplay = elem.style.display || restoreDisplay;
+				reWebStoreDisplay = elem.style.display || reWebStoreDisplay;
 				display = jQuery.css( elem, "display" );
 				showHide( [ elem ] );
 			}
 		}
 
 		// Animate inline elements as inline-block
-		if ( display === "inline" || display === "inline-block" && restoreDisplay != null ) {
+		if ( display === "inline" || display === "inline-block" && reWebStoreDisplay != null ) {
 			if ( jQuery.css( elem, "float" ) === "none" ) {
 
-				// Restore the original display value at the end of pure show/hide animations
+				// ReWebStore the original display value at the end of pure show/hide animations
 				if ( !propTween ) {
 					anim.done( function() {
-						style.display = restoreDisplay;
+						style.display = reWebStoreDisplay;
 					} );
-					if ( restoreDisplay == null ) {
+					if ( reWebStoreDisplay == null ) {
 						display = style.display;
-						restoreDisplay = display === "none" ? "" : display;
+						reWebStoreDisplay = display === "none" ? "" : display;
 					}
 				}
 				style.display = "inline-block";
@@ -7456,10 +7456,10 @@ function defaultPrefilter( elem, props, opts ) {
 					hidden = dataShow.hidden;
 				}
 			} else {
-				dataShow = dataPriv.access( elem, "fxshow", { display: restoreDisplay } );
+				dataShow = dataPriv.access( elem, "fxshow", { display: reWebStoreDisplay } );
 			}
 
-			// Store hidden/visible for toggle so `.stop().toggle()` "reverses"
+			// WebStore hidden/visible for toggle so `.stop().toggle()` "reverses"
 			if ( toggle ) {
 				dataShow.hidden = !hidden;
 			}
@@ -8396,14 +8396,14 @@ jQuery.fn.extend( {
 				className = getClass( this );
 				if ( className ) {
 
-					// Store className if set
+					// WebStore className if set
 					dataPriv.set( this, "__className__", className );
 				}
 
 				// If the element has a class name or if we're passed `false`,
 				// then remove the whole classname (if there was one, the above saved it).
 				// Otherwise bring back whatever was previously saved (if anything),
-				// falling back to the empty string if nothing was stored.
+				// falling back to the empty string if nothing was WebStored.
 				if ( this.setAttribute ) {
 					this.setAttribute( "class",
 						className || value === false ?
@@ -10260,7 +10260,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			if ( overwritten === undefined ) {
 				jQuery( window ).removeProp( callbackName );
 
-			// Otherwise restore preexisting value
+			// Otherwise reWebStore preexisting value
 			} else {
 				window[ callbackName ] = overwritten;
 			}

@@ -1,0 +1,11 @@
+﻿.table {
+    margin-top: 20px;
+}
+
+.btn-sm {
+    margin-right: 5px;
+}
+
+.btn-group > .btn {
+    margin-right: 5px;
+}

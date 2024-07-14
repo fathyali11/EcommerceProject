@@ -1,10 +1,24 @@
 ﻿global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
-global using WebApplication_Services;
-global using WebApplication_Data;
-global using WebApplication_IServices;
-global using WebApplication_Models;
+global using System.Diagnostics;
+global using System.ComponentModel.DataAnnotations;
+global using System.Linq.Expressions;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
+global using Microsoft.EntityFrameworkCore.Migrations;
+global using Microsoft.AspNetCore.Mvc.Rendering;
+
+
+
+
+
+global using WebStore.Data;
+global using WebStore.Models;
+global using WebStore.Attributes;
+global using WebStore.IRepositories;
+global using WebStore.Repositories;
+global using WebStore.ViewModels;
+global using WebStore.Settings;
 
 
 

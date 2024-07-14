@@ -482,10 +482,10 @@ function removeHandler(element, events, typeEvent, handler, delegationSelector) 
 }
 
 function removeNamespacedHandlers(element, events, typeEvent, namespace) {
-  const storeElementEvent = events[typeEvent] || {};
-  Object.keys(storeElementEvent).forEach(handlerKey => {
+  const WebStoreElementEvent = events[typeEvent] || {};
+  Object.keys(WebStoreElementEvent).forEach(handlerKey => {
     if (handlerKey.includes(namespace)) {
-      const event = storeElementEvent[handlerKey];
+      const event = WebStoreElementEvent[handlerKey];
       removeHandler(element, events, typeEvent, event.originalHandler, event.delegationSelector);
     }
   });
@@ -532,12 +532,12 @@ const EventHandler = {
       });
     }
 
-    const storeElementEvent = events[typeEvent] || {};
-    Object.keys(storeElementEvent).forEach(keyHandlers => {
+    const WebStoreElementEvent = events[typeEvent] || {};
+    Object.keys(WebStoreElementEvent).forEach(keyHandlers => {
       const handlerKey = keyHandlers.replace(stripUidRegex, '');
 
       if (!inNamespace || originalTypeEvent.includes(handlerKey)) {
-        const event = storeElementEvent[keyHandlers];
+        const event = WebStoreElementEvent[keyHandlers];
         removeHandler(element, events, typeEvent, event.originalHandler, event.delegationSelector);
       }
     });
@@ -3109,7 +3109,7 @@ EventHandler.on(document, EVENT_CLICK_DATA_API$2, SELECTOR_DATA_TOGGLE$2, functi
 
   EventHandler.one(target, EVENT_SHOW$3, showEvent => {
     if (showEvent.defaultPrevented) {
-      // only register focus restorer if modal will actually get shown
+      // only register focus reWebStorer if modal will actually get shown
       return;
     }
 
