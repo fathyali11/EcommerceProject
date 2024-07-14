@@ -25,7 +25,7 @@ namespace WebStore.Repositories
             }
             if(entity.ImageFile == null) 
                 return null;
-            entity.product.ImageName=SaveGame(entity.ImageFile);
+            entity.product.ImageName= SaveImage(entity.ImageFile);
 
             context.Products.Add(entity.product);
             var NumberOfUpdates = context.SaveChanges();
@@ -64,7 +64,7 @@ namespace WebStore.Repositories
             var HasImage = ImageFile is not null;
             if (HasImage)
             {
-                product.ImageName = SaveGame(ImageFile);
+                product.ImageName = SaveImage(ImageFile);
             }
             
             var numberOfUpdates= context.SaveChanges();
@@ -107,11 +107,11 @@ namespace WebStore.Repositories
             else
                 return null;
         }
-        private string SaveGame(IFormFile formFile)
+        private string SaveImage(IFormFile formFile)
         {
-            var name = $"{Guid.NewGuid()}{Path.GetExtension(formFile.FileName)}";
-            var FolderPath = Path.Combine(webHostEnvironment.ContentRootPath, FileSettings.ImagePath);
-            var path=Path.Combine(FolderPath, name);
+            var ImageName = $"{Guid.NewGuid()}{Path.GetExtension(formFile.FileName)}";
+            var FolderPath = Path.Combine(webHostEnvironment.ContentRootPath,"images","products");
+            var path=Path.Combine(FolderPath, ImageName);
             if (!Directory.Exists(FolderPath))
             {
                 Directory.CreateDirectory(FolderPath);
@@ -120,7 +120,7 @@ namespace WebStore.Repositories
             formFile.CopyTo(stream);
 
 
-            return name;
+            return ImageName;
         }
 
         public EditProductViewModel GetEditProductViewModel(int id)
