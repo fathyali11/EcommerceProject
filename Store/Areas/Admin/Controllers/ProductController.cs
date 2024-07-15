@@ -21,8 +21,8 @@ namespace WebStore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
-            return View(ProductRepository.FullProductVM(new CreateProductViewModel()));
+            var model = ProductRepository.FullProductVM(new CreateProductViewModel());
+            return View(model);
         }
 
         [HttpPost]
@@ -81,19 +81,19 @@ namespace WebStore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            Product? Product = ProductRepository.GetById(x => x.Id == id);
+            CreateProductViewModel? Product = ProductRepository.GetCreateProductViewModel(id);
             if (Product == null)
             {
                 return NotFound();
             }
-            return View(Product);
+            return View("Create",Product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Product Product)
+        public IActionResult Delete(CreateProductViewModel model)
         {
-            var res = ProductRepository.Remove(Product);
+            var res = ProductRepository.Remove(model);
             if (res is null)
             {
                 TempData["error"] = "Product is not deleted";

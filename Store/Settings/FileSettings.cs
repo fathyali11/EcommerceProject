@@ -2,6 +2,6 @@
 {
     public static class FileSettings
     {
-        public const string ImagePath = "/Images/Products";
+        public const string ImagePath = "Images/Products";
     }
 }

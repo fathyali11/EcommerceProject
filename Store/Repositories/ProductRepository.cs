@@ -19,12 +19,10 @@ namespace WebStore.Repositories
         }
         public Product? Add(CreateProductViewModel entity)
         {
-            if (entity == null)
-            {
+            if (entity == null|| entity.ImageFile==null)
                 return null;
-            }
-            if(entity.ImageFile == null) 
-                return null;
+            
+            
             entity.product.ImageName= SaveImage(entity.ImageFile);
 
             context.Products.Add(entity.product);
@@ -34,18 +32,7 @@ namespace WebStore.Repositories
             else
                 return null;
         }
-        public CreateProductViewModel FullProductVM(CreateProductViewModel model)
-        {
-            CreateProductViewModel viewModel = new CreateProductViewModel
-            {
-                product = model.product,
-                categoriesSelectedList = categoryRepository
-                .GetAll()
-                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
-            };
-            return viewModel;
-        }
-
+        
         public Product? Update(EditProductViewModel model, int id)
         {
             var product = GetById(x=>x.Id==id);
@@ -72,7 +59,7 @@ namespace WebStore.Repositories
             {
                 if (HasImage)
                 {
-                    var path = Path.Combine(FileSettings.ImagePath,OldProductName);
+                    var path = Path.Combine(webHostEnvironment.WebRootPath,FileSettings.ImagePath,OldProductName);
                     File.Delete(path);
                 }
                 return product;
@@ -94,33 +81,41 @@ namespace WebStore.Repositories
             Product? item = context.Products.Include(x=>x.Category).FirstOrDefault(filter);
             return item;
         }
-        public Product? Remove(Product entity)
+        public Product? Remove(CreateProductViewModel model)
         {
-            if (entity == null)
-            {
+            if (model == null)
                 return null;
-            }
-            context.Products.Remove(entity);
+
+
+            context.Products.Remove(model.product);
             var NumberOfUpdates = context.SaveChanges();
             if (NumberOfUpdates > 0)
-                return entity;
+            {
+                if(model.product.ImageName is not null)
+                {
+                    var path = Path.Combine($"{webHostEnvironment.WebRootPath}/{FileSettings.ImagePath}",model.product.ImageName);
+                    File.Delete(path);
+                }
+                
+                return model.product;
+            }
             else
                 return null;
         }
-        private string SaveImage(IFormFile formFile)
+        
+        public CreateProductViewModel FullProductVM(CreateProductViewModel model)
         {
-            var ImageName = $"{Guid.NewGuid()}{Path.GetExtension(formFile.FileName)}";
-            var FolderPath = Path.Combine(webHostEnvironment.ContentRootPath,"images","products");
-            var path=Path.Combine(FolderPath, ImageName);
-            if (!Directory.Exists(FolderPath))
-            {
-                Directory.CreateDirectory(FolderPath);
-            }
-            using var stream=new FileStream(path, FileMode.Create);
-            formFile.CopyTo(stream);
+            CreateProductViewModel viewModel = new CreateProductViewModel();
+            if (model.product is null)
+                viewModel.product = new Product { Id = 0 };
+            else
+                viewModel.product = model.product;
 
+            viewModel.categoriesSelectedList = categoryRepository
+                .GetAll()
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() });
 
-            return ImageName;
+            return viewModel;
         }
 
         public EditProductViewModel GetEditProductViewModel(int id)
@@ -133,6 +128,33 @@ namespace WebStore.Repositories
                 .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
             };
             return model;
+        }
+        
+        public CreateProductViewModel GetCreateProductViewModel(int id)
+        {
+            CreateProductViewModel model = new CreateProductViewModel
+            {
+                product = GetById(x => x.Id == id),
+                categoriesSelectedList = categoryRepository
+                .GetAll()
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+            };
+            return model;
+        }
+        private string SaveImage(IFormFile formFile)
+        {
+            var ImageName = $"{Guid.NewGuid()}{Path.GetExtension(formFile.FileName)}";
+            var FolderPath = Path.Combine(webHostEnvironment.WebRootPath, FileSettings.ImagePath);
+            var path = Path.Combine(FolderPath, ImageName);
+            if (!Directory.Exists(FolderPath))
+            {
+                Directory.CreateDirectory(FolderPath);
+            }
+            using var stream = new FileStream(path, FileMode.Create);
+            formFile.CopyTo(stream);
+
+
+            return ImageName;
         }
     }
 }

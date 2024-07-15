@@ -38,7 +38,7 @@
                 <td>@item.Price100.ToString("C")</td>
                 <td>@item.Category.Name</td>
                 <td>
-                    <img src="@($"{FileSettings.ImagePath}/{item.ImageName}")" alt="Product Image" style="width: 100px; height: auto;" />
+                    <img src="@Url.Content($"~/{FileSettings.ImagePath}/{item.ImageName}")" alt="@item.Name" style="width: 100px; height: auto;" />
                 </td>
                 <td class="text-center">
                     <div class="btn-group" role="group">
