@@ -10,7 +10,7 @@ namespace WebApplication_Models
         [Display(Name = "Category Name")]
         public string Name { get; set; }
         [Display(Name = "Category Order")]
-        
+        //[UniqueOrder]
         public int CategoryOrder {  get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿function Delete(_url) {
+    console.log("Deleting:", _url); // Log to check if function is called correctly
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -11,12 +12,16 @@
         if (result.isConfirmed) {
             $.ajax({
                 url: _url,
-                type: 'Delete', 
+                type: 'DELETE',
                 success: function (data) {
-                    window.location.reload();
-                    toastr.success(data.message); 
+                    console.log("Delete successful:", data); // Log success data
+                    window.location.reload(); // Reload the page after successful deletion
+                    toastr.success(data.message); // Show a success message using toastr (if applicable)
+                },
+                error: function (xhr, status, error) {
+                    console.error("Delete request failed:", error); // Log any errors
+                    toastr.error("Delete request failed"); // Show an error message using toastr (if applicable)
                 }
-                
             });
         }
     });
