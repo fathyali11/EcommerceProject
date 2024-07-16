@@ -9,7 +9,7 @@ namespace WebStore.IRepositories
         IEnumerable<Product> GetAll();
         Product? GetById(Expression<Func<Product, bool>> filter);
         
-        Product? Remove(CreateProductViewModel model);
+        Product? Remove(int id);
         Product? Update(EditProductViewModel model,int id);
         CreateProductViewModel FullProductVM(CreateProductViewModel model);
         public Product? Add(CreateProductViewModel entity);

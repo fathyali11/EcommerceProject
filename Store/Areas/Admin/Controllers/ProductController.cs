@@ -78,30 +78,33 @@ namespace WebStore.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
-            CreateProductViewModel? Product = ProductRepository.GetCreateProductViewModel(id);
-            if (Product == null)
-            {
-                return NotFound();
-            }
-            return View("Create",Product);
-        }
+            var product = ProductRepository.Remove(id);
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(CreateProductViewModel model)
-        {
-            var res = ProductRepository.Remove(model);
-            if (res is null)
+            if (product == null)
             {
-                TempData["error"] = "Product is not deleted";
-                return BadRequest(res);
+                return Json(new { success = false, message = "Product not found." });
             }
 
-            TempData["success"] = "Product Deleted Successfully";
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true, message = "Product deleted successfully." });
         }
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Delete(CreateProductViewModel model)
+        //{
+        //    var res = ProductRepository.Remove(model);
+        //    if (res is null)
+        //    {
+        //        TempData["error"] = "Product is not deleted";
+        //        return BadRequest(res);
+        //    }
+
+        //    TempData["success"] = "Product Deleted Successfully";
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

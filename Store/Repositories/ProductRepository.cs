@@ -1,8 +1,5 @@
 ﻿
 
-
-using Microsoft.AspNetCore.Hosting;
-
 namespace WebStore.Repositories
 {
     public class ProductRepository :  IProductRepository
@@ -81,23 +78,24 @@ namespace WebStore.Repositories
             Product? item = context.Products.Include(x=>x.Category).FirstOrDefault(filter);
             return item;
         }
-        public Product? Remove(CreateProductViewModel model)
+        public Product? Remove(int id)
         {
-            if (model == null)
+            var product = GetById(x=>x.Id==id);
+            if (product is null)
                 return null;
 
 
-            context.Products.Remove(model.product);
+            context.Products.Remove(product);
             var NumberOfUpdates = context.SaveChanges();
             if (NumberOfUpdates > 0)
             {
-                if(model.product.ImageName is not null)
+                if(product.ImageName is not null)
                 {
-                    var path = Path.Combine($"{webHostEnvironment.WebRootPath}/{FileSettings.ImagePath}",model.product.ImageName);
+                    var path = Path.Combine($"{webHostEnvironment.WebRootPath}/{FileSettings.ImagePath}",product.ImageName);
                     File.Delete(path);
                 }
                 
-                return model.product;
+                return product;
             }
             else
                 return null;
