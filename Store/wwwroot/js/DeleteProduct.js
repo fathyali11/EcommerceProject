@@ -11,22 +11,13 @@
         if (result.isConfirmed) {
             $.ajax({
                 url: _url,
-                type: 'DELETE', // Use 'DELETE' instead of 'Delete'
+                type: 'Delete', 
                 success: function (data) {
-                    toastr.success(data.message); // Show success message using toastr
-                    // Assuming you have a function to reload data or update UI
-                    reloadData(); // Call a function to reload data or update UI
-                },
-                error: function (xhr, status, error) {
-                    toastr.error("Failed to delete item."); // Show error message if deletion fails
+                    window.location.reload();
+                    toastr.success(data.message); 
                 }
+                
             });
         }
     });
-}
-
-// Example function to reload data (replace with your actual implementation)
-function reloadData() {
-    // Code to reload your data table or update UI element
-    dataTable.ajax.reload(); // Reload data table assuming 'dataTable' is initialized
 }
