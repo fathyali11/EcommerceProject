@@ -7,58 +7,27 @@
 <h1>Details</h1>
 
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            Product Details
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <dl class="row">
-                        <dt class="col-sm-4">Name</dt>
-                        <dd class="col-sm-8">@Model.Name</dd>
-
-                        <dt class="col-sm-4">Description</dt>
-                        <dd class="col-sm-8">@Model.Description</dd>
-
-                        <dt class="col-sm-4">Author</dt>
-                        <dd class="col-sm-8">@Model.Author</dd>
-
-                        <dt class="col-sm-4">List Price</dt>
-                        <dd class="col-sm-8">@Model.ListPrice.ToString("C")</dd>
-
-                        <dt class="col-sm-4">Price</dt>
-                        <dd class="col-sm-8">@Model.Price.ToString("C")</dd>
-
-                        <dt class="col-sm-4">Price for 50+</dt>
-                        <dd class="col-sm-8">@Model.Price50.ToString("C")</dd>
-
-                        <dt class="col-sm-4">Price for 100+</dt>
-                        <dd class="col-sm-8">@Model.Price100.ToString("C")</dd>
-
-                        <dt class="col-sm-4">Category</dt>
-                        <dd class="col-sm-8">@Model.Category.Name</dd>
-
-                        <dt class="col-sm-4">Image</dt>
-                        <dd class="col-sm-8">
-                            <img src="@Url.Content($"~/{FileSettings.ImagePath}/{Model.ImageName}")" class="img-fluid" alt="@Model.Name" />
-                        </dd>
-                    </dl>
-                </div>
+    <div class="card mb-3 border-0" style="max-width: 540px; border-radius: 20px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@Url.Content($"~/{FileSettings.ImagePath}/{Model.ImageName}")" class="card-img-top" alt="..." style="height: 100%; object-fit: cover;" alt="@Model.Name">
             </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <h5 class="card-title">@Model.Category.Name</h5>
+                    <p class="card-text">@Model.Description</p>
+                    <p class="card-text">
+                        <span style="text-decoration: line-through; opacity: 0.6;">Old Price: @Model.ListPrice.ToString("c")</span><br>
+                        Current Price: @Model.Price.ToString("c")
+                    </p>
 
-            <div class="mt-3">
-                <a asp-action="Edit" asp-controller="Product" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
-                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    <p class="card-text">Price for +50 : @Model.Price50.ToString("c")</p>
+                    <p class="card-text">Price for +100 : @Model.Price100.ToString("c")</p>
+                    <p class="card-text">By : @Model.Author</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
-
-@section Scripts{
-    <a asp-action="Edit">Edit</a>
     <a asp-action="Index">Back To List</a>
-
-}
+</div>

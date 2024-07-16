@@ -5,16 +5,17 @@ namespace WebStore.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository productRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductRepository productRepository)
         {
-            _logger = logger;
+            this.productRepository = productRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var products=productRepository.GetAll();
+            return View(products);
         }
 
         public IActionResult Privacy()
