@@ -63,9 +63,12 @@ namespace WebStore.Repositories
             }
             else
             {
-                var cover = Path.Combine(FileSettings.ImagePath, product.ImageName);
-                File.Delete(cover);
-                return null;
+                if(HasImage) 
+                {
+                    var cover = Path.Combine(FileSettings.ImagePath, product.ImageName);
+                    File.Delete(cover);
+                }
+                return product;
             }
         }
 

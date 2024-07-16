@@ -51,11 +51,9 @@ namespace WebStore.Repositories
                 return null;
             category.Name = model.Name;
             category.CategoryOrder = model.CategoryOrder;
-            var NumberOfUpdates = context.SaveChanges();
-            if (NumberOfUpdates > 0)
-                return category;
-            else
-                return null;
+            context.SaveChanges();
+            return category;
+            
         }
     }
 }

@@ -91,20 +91,12 @@ namespace WebStore.Areas.Admin.Controllers
             return Json(new { success = true, message = "Product deleted successfully." });
         }
 
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(CreateProductViewModel model)
-        //{
-        //    var res = ProductRepository.Remove(model);
-        //    if (res is null)
-        //    {
-        //        TempData["error"] = "Product is not deleted";
-        //        return BadRequest(res);
-        //    }
-
-        //    TempData["success"] = "Product Deleted Successfully";
-        //    return RedirectToAction(nameof(Index));
-        //}
+        public IActionResult Details(int id)
+        {
+            Product product=ProductRepository.GetById(x=>x.Id==id);
+            if(product == null)
+                return NotFound();
+            return View(product);
+        }
     }
 }

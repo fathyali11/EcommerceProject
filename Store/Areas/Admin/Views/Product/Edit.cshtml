@@ -5,8 +5,7 @@
 }
 
 <h1>Edit</h1>
-
-<h4>EditProductViewModel</h4>
+<partial name="_Notefications" />
 <hr />
 <div class="row">
     
@@ -14,6 +13,10 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
 
+            <div class="form-group mb-3">
+                <input asp-for="@Model.product.ImageName" type="hidden" class="form-control" />
+                <span asp-validation-for="@Model.product.ImageName"  class="text-danger"></span>
+            </div>
             <div class="form-group mb-3">
                 <label asp-for="@Model.product.Name" class="control-label"></label>
                 <input asp-for="@Model.product.Name" class="form-control" />
@@ -72,6 +75,7 @@
                         <button class="btn btn-outline-secondary" type="button" onclick="clearPreview()">Clear</button>
                     </div>
                 </div>
+                <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -80,7 +84,7 @@
     </div>
     <div class="col-md-6">
         <div id="imagePreview" class="mt-4 text-center">
-            <img src="@FileSettings.ImagePath/@Model.product.ImageName" class="img-fluid" alt="Current Image" />
+            <img src="@Url.Content($"~/{FileSettings.ImagePath}/{Model.product.ImageName}")" alt="@Model.product.Name" style="width: 600px; height: auto;" />
         </div>
     </div>
 </div>

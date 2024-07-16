@@ -9,6 +9,7 @@ namespace WebStore.ViewModels
         public Product product { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> categoriesSelectedList { set; get; }
+        [ImageExtension(FileSettings.ImageExtensions)]
         public IFormFile ImageFile {  get; set; }
     }
 }
