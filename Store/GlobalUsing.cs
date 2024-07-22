@@ -7,11 +7,15 @@ global using System.ComponentModel.DataAnnotations.Schema;
 global using Microsoft.EntityFrameworkCore.Infrastructure;
 global using Microsoft.EntityFrameworkCore.Migrations;
 global using Microsoft.AspNetCore.Mvc.Rendering;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.UI.Services;
 
 
 
 
 
+global using WebStore.Services;
 global using WebStore.Data;
 global using WebStore.Models;
 global using WebStore.Attributes;

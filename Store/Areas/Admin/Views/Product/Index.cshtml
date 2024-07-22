@@ -16,10 +16,8 @@
             <th>Name</th>
             <th>Description</th>
             <th>Author</th>
-            <th>List Price</th>
-            <th>Price</th>
-            <th>Price for 50+</th>
-            <th>Price for 100+</th>
+            <th>Old Price</th>
+            <th>New Price</th>
             <th>Category</th>
             <th>Image</th>
             <th>Actions</th>
@@ -32,10 +30,8 @@
                 <td>@item.Name</td>
                 <td>@item.Description</td>
                 <td>@item.Author</td>
-                <td>@item.ListPrice.ToString("C")</td>
-                <td>@item.Price.ToString("C")</td>
-                <td>@item.Price50.ToString("C")</td>
-                <td>@item.Price100.ToString("C")</td>
+                <td>@item.OldPrice.ToString("C")</td>
+                <td>@item.NewPrice.ToString("C")</td>
                 <td>@item.Category.Name</td>
                 <td>
                     <img src="@Url.Content($"~/{FileSettings.ImagePath}/{item.ImageName}")" alt="@item.Name" style="width: 100px; height: auto;" />
@@ -44,9 +40,6 @@
                     <div class="btn-group" role="group">
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
                             <i class="bi bi-pencil-square"></i> Edit
-                        </a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">
-                            <i class="bi bi-info-circle"></i> Details
                         </a>
                         <a onclick=Delete('/Admin/Product/Delete/@item.Id') class="btn btn-info btn-sm">
                             <i class="bi bi-trash3-fill"></i> Delete

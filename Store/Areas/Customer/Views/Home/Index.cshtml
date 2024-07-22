@@ -13,8 +13,8 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text">
-                            <span style="text-decoration: line-through; opacity: 0.6;">Old Price: @item.ListPrice.ToString("c")</span><br>
-                            Current Price: @item.Price.ToString("c")
+                            <span style="text-decoration: line-through; opacity: 0.6;">Old Price: @item.OldPrice.ToString("c")</span><br>
+                            Current Price: @item.NewPrice.ToString("c")
                         </p>
                         <a asp-action="Details" asp-area="Admin" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-primary">View Details</a>
                     </div>

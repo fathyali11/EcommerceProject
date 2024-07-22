@@ -1,8 +1,10 @@
 ﻿
 
+
+
 namespace WebStore.Data
 {
-    public class ApplicationDbContext:DbContext
+    public class ApplicationDbContext:IdentityDbContext<IdentityUser  >
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options) 
         {
@@ -10,6 +12,7 @@ namespace WebStore.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasData(new Category[]
             {
                 new Category{Id=1,Name="Action",CategoryOrder=1},
@@ -26,10 +29,8 @@ namespace WebStore.Data
                     Name = "Gaming Mouse",
                     Description = "Ergonomic gaming mouse with customizable DPI",
                     Author = "Logitech",
-                    ListPrice = 49.99,
-                    Price = 45.99,
-                    Price50 = 43.99,
-                    Price100 = 39.99,
+                    OldPrice = 49.99,
+                    NewPrice = 45.99,
                     CategoryId = 1,
                     ImageName=""
                 },
@@ -39,10 +40,8 @@ namespace WebStore.Data
                     Name = "Mechanical Keyboard",
                     Description = "Mechanical keyboard with RGB lighting",
                     Author = "Corsair",
-                    ListPrice = 99.99,
-                    Price = 89.99,
-                    Price50 = 84.99,
-                    Price100 = 79.99,
+                    OldPrice = 99.99,
+                    NewPrice = 89.99,
                     CategoryId = 1,
                     ImageName=""
                 },
@@ -52,10 +51,8 @@ namespace WebStore.Data
                     Name = "Gaming Chair",
                     Description = "Comfortable gaming chair with lumbar support",
                     Author = "DXRacer",
-                    ListPrice = 199.99,
-                    Price = 179.99,
-                    Price50 = 169.99,
-                    Price100 = 159.99,
+                    OldPrice = 199.99,
+                    NewPrice = 179.99,
                     CategoryId = 2,
                     ImageName=""
                 },
@@ -65,10 +62,8 @@ namespace WebStore.Data
                     Name = "4K Monitor",
                     Description = "27-inch 4K UHD monitor with HDR",
                     Author = "Samsung",
-                    ListPrice = 399.99,
-                    Price = 379.99,
-                    Price50 = 359.99,
-                    Price100 = 339.99,
+                    OldPrice = 399.99,
+                    NewPrice = 379.99,
                     CategoryId = 1,
                     ImageName=""
                 },
@@ -78,10 +73,8 @@ namespace WebStore.Data
                     Name = "Gaming Headset",
                     Description = "Surround sound gaming headset with microphone",
                     Author = "HyperX",
-                    ListPrice = 79.99,
-                    Price = 74.99,
-                    Price50 = 69.99,
-                    Price100 = 64.99,
+                    OldPrice = 79.99,
+                    NewPrice = 74.99,
                     CategoryId = 1,
                     ImageName=""
                 }
@@ -89,5 +82,6 @@ namespace WebStore.Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser  > ApplicationUsers  { get; set; }
     }
 }

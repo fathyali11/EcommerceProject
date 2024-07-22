@@ -18,16 +18,13 @@
                     <h5 class="card-title">@Model.Category.Name</h5>
                     <p class="card-text">@Model.Description</p>
                     <p class="card-text">
-                        <span style="text-decoration: line-through; opacity: 0.6;">Old Price: @Model.ListPrice.ToString("c")</span><br>
-                        Current Price: @Model.Price.ToString("c")
+                        <span style="text-decoration: line-through; opacity: 0.6;">Old Price: @Model.OldPrice.ToString("c")</span><br>
+                        Current Price: @Model.NewPrice.ToString("c")
                     </p>
-
-                    <p class="card-text">Price for +50 : @Model.Price50.ToString("c")</p>
-                    <p class="card-text">Price for +100 : @Model.Price100.ToString("c")</p>
                     <p class="card-text">By : @Model.Author</p>
                 </div>
             </div>
         </div>
     </div>
-    <a asp-action="Index">Back To List</a>
+    <a asp-action="Index" asp-controller="Home" asp-area="Customer">Back To List</a>
 </div>

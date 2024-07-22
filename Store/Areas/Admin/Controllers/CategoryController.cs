@@ -1,8 +1,12 @@
 ﻿
 
+using Microsoft.AspNetCore.Authorization;
+using WebStore.Settings.MyRoles;
+
 namespace WebStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles.AdminRole)]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository categoryRepository;

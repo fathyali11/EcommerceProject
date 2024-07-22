@@ -38,9 +38,8 @@ namespace WebStore.Repositories
             product.Name = model.product.Name;
             product.Description = model.product.Description;
             product.CategoryId = model.product.CategoryId;
-            product.Price50 = model.product.Price50;
-            product.ListPrice = model.product.ListPrice;
-            product.Price100 = model.product.Price100;
+            product.NewPrice = model.product.NewPrice;
+            product.OldPrice = model.product.OldPrice;
             product.Author = model.product.Author;
 
             var ImageFile = model.ImageFile;

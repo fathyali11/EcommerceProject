@@ -1,8 +1,12 @@
 ﻿
 
+using Microsoft.AspNetCore.Authorization;
+using WebStore.Settings.MyRoles;
+
 namespace WebStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles.AdminRole)]
     public class ProductController : Controller
     {
         private readonly IProductRepository ProductRepository;
@@ -90,7 +94,7 @@ namespace WebStore.Areas.Admin.Controllers
 
             return Json(new { success = true, message = "Product deleted successfully." });
         }
-
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             Product product=ProductRepository.GetById(x=>x.Id==id);
