@@ -32,6 +32,7 @@ namespace WebStore.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ICompanyRepository companyRepository;
 
         public RegisterModel(
             UserManager<IdentityUser  > userManager,
@@ -39,7 +40,8 @@ namespace WebStore.Areas.Identity.Pages.Account
             SignInManager<IdentityUser  > signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ICompanyRepository companyRepository)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +50,7 @@ namespace WebStore.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            this.companyRepository = companyRepository;
         }
 
         /// <summary>
@@ -75,6 +78,13 @@ namespace WebStore.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [Display(Name ="First Name")]
+            public string FirstName { get; set; }
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -83,6 +93,10 @@ namespace WebStore.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+            [Required]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name ="Phone Number")]
+            public string PhoneNumber { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -108,6 +122,9 @@ namespace WebStore.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> RoleList { get; set; }
             [Required]
             public string City {  get; set; }
+            public int ?CompanyId { get; set; }
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CompanySelectedList { get; set; }
         }
 
 
@@ -122,7 +139,8 @@ namespace WebStore.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             Input = new()
             {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(x => new SelectListItem { Text = x, Value = x }).ToList()
+                RoleList = _roleManager.Roles.Select(x => x.Name).Select(x => new SelectListItem { Text = x, Value = x }).ToList(),
+                CompanySelectedList=companyRepository.GetAll().Select(x=>new SelectListItem { Text=x.Name,Value=x.Id.ToString()}).ToList()
             };
         }
 
@@ -136,6 +154,12 @@ namespace WebStore.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.City=Input.City;
                 user.Role=Input.Role;
+                user.FirstName=Input.FirstName;
+                user.LastName=Input.LastName;
+                user.CompanyId=Input.CompanyId;
+                user.PhoneNumber=Input.PhoneNumber;
+
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -143,6 +167,7 @@ namespace WebStore.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                   
                     if(!string.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
@@ -182,7 +207,8 @@ namespace WebStore.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             Input = new()
             {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(x => new SelectListItem { Text = x, Value = x }).ToList()
+                RoleList = _roleManager.Roles.Select(x => x.Name).Select(x => new SelectListItem { Text = x, Value = x }).ToList(),
+                CompanySelectedList = companyRepository.GetAll().Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList()
             };
             return Page();
         }

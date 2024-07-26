@@ -1,19 +1,19 @@
 ﻿
 
-using Microsoft.AspNetCore.Authorization;
-using WebStore.Settings.MyRoles;
-
 namespace WebStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles.AdminRole)]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductRepository ProductRepository;
+        private readonly IShoppingCartRepository shoppingCartRepository;
 
-        public ProductController(IProductRepository ProductRepository)
+        public ProductController(IProductRepository ProductRepository
+            ,IShoppingCartRepository shoppingCartRepository)
         {
             this.ProductRepository = ProductRepository;
+            this.shoppingCartRepository = shoppingCartRepository;
         }
 
         public IActionResult Index()
@@ -94,13 +94,43 @@ namespace WebStore.Areas.Admin.Controllers
 
             return Json(new { success = true, message = "Product deleted successfully." });
         }
-        [AllowAnonymous]
+       
+        [HttpGet]
         public IActionResult Details(int id)
         {
             Product product=ProductRepository.GetById(x=>x.Id==id);
-            if(product == null)
-                return NotFound();
-            return View(product);
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.ProductId = id;
+            shoppingCart.Product = product;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var cart = shoppingCartRepository.GetAll().FirstOrDefault(x => x.ProductId == id && x.ApplicationUserId == userId);
+            if (cart is not null)
+                shoppingCart.Count = cart.Count;
+            return View(shoppingCart);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity=(ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+            var cartFromDB=shoppingCartRepository.GetAll().FirstOrDefault(x=>x.ApplicationUserId==userId&&x.ProductId==shoppingCart.ProductId);
+            if(cartFromDB is not null)
+            {
+                cartFromDB.Count=shoppingCart.Count;
+                shoppingCartRepository.Update(cartFromDB);
+            }
+            else
+            {
+               shoppingCartRepository.Add(shoppingCart);
+                
+            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "Customer" });
+
         }
     }
 }

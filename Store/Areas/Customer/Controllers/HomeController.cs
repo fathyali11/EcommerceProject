@@ -6,7 +6,6 @@ using WebStore.Settings.MyRoles;
 namespace WebStore.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    //[Authorize(Roles.CustomerRole)]
     public class HomeController : Controller
     {
         private readonly IProductRepository productRepository;

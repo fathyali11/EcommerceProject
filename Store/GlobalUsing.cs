@@ -13,6 +13,11 @@ global using Microsoft.AspNetCore.Identity.UI.Services;
 
 
 
+global using Microsoft.AspNetCore.Authorization;
+global using System.Security.Claims;
+global using WebStore.Areas.Customer.Controllers;
+global using WebStore.Settings.MyRoles;
+
 
 
 global using WebStore.Services;
