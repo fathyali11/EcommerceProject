@@ -134,7 +134,10 @@ namespace WebStore.Areas.Identity.Pages.Account
             {
                 await _roleManager.CreateAsync(new IdentityRole(Roles.AdminRole));
                 await _roleManager.CreateAsync(new IdentityRole(Roles.CustomerRole));
-            }
+                await _roleManager.CreateAsync(new IdentityRole(Roles.CompanyRole));
+                await _roleManager.CreateAsync(new IdentityRole(Roles.EmployeeRole));
+
+			}
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             Input = new()

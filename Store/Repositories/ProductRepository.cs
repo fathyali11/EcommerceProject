@@ -56,7 +56,7 @@ namespace WebStore.Repositories
                 if (HasImage)
                 {
                     var path = Path.Combine(webHostEnvironment.WebRootPath,FileSettings.ImagePath,OldProductName);
-                    File.Delete(path);
+                    System.IO.File.Delete(path);
                 }
                 return product;
             }
@@ -65,7 +65,7 @@ namespace WebStore.Repositories
                 if(HasImage) 
                 {
                     var cover = Path.Combine(FileSettings.ImagePath, product.ImageName);
-                    File.Delete(cover);
+                    System.IO.File.Delete(cover);
                 }
                 return product;
             }
@@ -94,7 +94,7 @@ namespace WebStore.Repositories
                 if(product.ImageName is not null)
                 {
                     var path = Path.Combine($"{webHostEnvironment.WebRootPath}/{FileSettings.ImagePath}",product.ImageName);
-                    File.Delete(path);
+                    System.IO.File.Delete(path);
                 }
                 
                 return product;

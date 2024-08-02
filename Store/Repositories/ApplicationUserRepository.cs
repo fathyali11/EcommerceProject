@@ -13,5 +13,10 @@ namespace WebStore.Repositories
         {
             return context.ApplicationUsers;
         }
-    }
+
+		public ApplicationUser GetById(string id)
+		{
+			return context.ApplicationUsers.FirstOrDefault(x=>x.Id==id);
+		}
+	}
 }

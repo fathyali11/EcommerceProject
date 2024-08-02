@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
+
 namespace WebStore.ViewModels
 {
     public class EditProductViewModel

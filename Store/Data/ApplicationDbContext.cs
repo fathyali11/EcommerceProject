@@ -21,7 +21,7 @@ namespace WebStore.Data
                 new Category{Id=4,Name="Funny",CategoryOrder=4}
             });
 
-            modelBuilder.Entity<Product>().HasData(new Product[]
+            modelBuilder.Entity<Models.Product>().HasData(new Product[]
             {
                 new Product
                 {
@@ -81,9 +81,11 @@ namespace WebStore.Data
             });
         }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Models.Product> Products { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ApplicationUser  > ApplicationUsers  { get; set; }
     }
 }

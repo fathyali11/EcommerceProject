@@ -10,13 +10,16 @@ global using Microsoft.AspNetCore.Mvc.Rendering;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.UI.Services;
-
+global using Stripe;
 
 
 global using Microsoft.AspNetCore.Authorization;
 global using System.Security.Claims;
 global using WebStore.Areas.Customer.Controllers;
 global using WebStore.Settings.MyRoles;
+global using WebStore.Settings.MyStatus;
+global using WebStore.Models;
+global using Product = WebStore.Models.Product;
 
 
 

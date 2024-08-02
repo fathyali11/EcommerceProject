@@ -6,7 +6,7 @@ namespace WebStore.ViewModels
 {
     public class CreateProductViewModel
     {
-        public Product product { get; set; }
+        public Models.Product product { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> categoriesSelectedList { set; get; }
         [ImageExtension(FileSettings.ImageExtensions)]
